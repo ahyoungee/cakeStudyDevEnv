@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  composer:
+    build:
+      context: ./docker/composer
+    container_name: composer
+    volumes: 
+      - ./cakeStudyApp/cms:/app/cms:cached
+    command: [tail, -f, /dev/null]
+  php:
+    build:
+      context: ./docker/php
+    volumes:
+      - ./cakeStudyApp/cms:/app/cms:cached
+    container_name: php
+  nginx:
+    build:
+      context: ./docker/nginx
+    container_name: nginx
+    depends_on: 
+      - php
+    ports:
+      - 80:80
+    volumes:
+      - ./cakeStudyApp/cms:/app/cms:cached
+      - ./docker/nginx/etc/nginx/conf.d/:/etc/nginx/conf.d/
+     
