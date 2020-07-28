@@ -76,7 +76,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', 'testsalt1234'),
+        'salt' => env('SECURITY_SALT'),
     ],
 
     /*
@@ -290,7 +290,10 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'timezone' => 'UTC',
-
+            'host' => env('DB_HOST', 'localhost'),
+            'username' => env('DB_USERNAME', 'test'),
+            'password' => env('DB_PASSWORD', 'test'),
+            'database' => env('DB_NAME', 'test'),
             /**
              * For MariaDB/MySQL the internal default changed from utf8 to utf8mb4, aka full utf-8 support, in CakePHP 3.6
              */
