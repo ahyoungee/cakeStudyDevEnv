@@ -52,6 +52,8 @@ class ArticlesController extends AppController
         $article = $this->Articles->newEmptyEntity();
         if ($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
+
+            $article->user_id = 1;
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('The article has been saved.'));
 
@@ -108,5 +110,19 @@ class ArticlesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function tags()
+    {
+        $tags = $this->request->getParam('pass');
+
+        $articles = $this->Articles->find('tagged', [
+            'tags' => $tags
+        ]);
+
+        $this->set([
+            'articles' => $articles,
+            'tags' => $tags
+        ]);
     }
 }

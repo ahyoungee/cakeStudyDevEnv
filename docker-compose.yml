@@ -20,7 +20,7 @@ services:
     depends_on: 
       - php
     ports:
-      - 80:80
+      - 8080:80
     volumes:
       - ./cakeStudyApp/cms:/app/cms:cached
       - ./docker/nginx/etc/nginx/conf.d/:/etc/nginx/conf.d/
@@ -38,4 +38,13 @@ services:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_USER}
       - MYSQL_PASSWORD=${DB_PW}
+  node:
+      build:
+          context: ./docker/node
+      container_name: node
+      tty: true
+      volumes:
+        - ./cakeStudyApp/front:/app/front:cached
+      ports:
+        - "3000:3000"
      
